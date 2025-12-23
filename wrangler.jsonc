@@ -1,7 +1,8 @@
 {
   "name": "html-test-site",
   "compatibility_date": "2025-12-23",
-  "assets": {
-    "directory": "./dist"
+  "project_name": "html-test-site",
+  "site": {
+    "bucket": "./dist"
   }
 }
