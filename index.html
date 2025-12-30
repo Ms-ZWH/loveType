@@ -1,242 +1,738 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>你对TA是哪种喜欢心理测试</title>
-<style>
-    body {
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-        background: #fff7f2;
-        color: #333;
-    }
-    .container {
-        max-width: 480px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-    h1, h2 {
-        text-align: center;
-        color: #ff6b81;
-    }
-    p {
-        line-height: 1.6;
-    }
-    button {
-        display: block;
-        width: 100%;
-        margin: 10px 0;
-        padding: 12px;
-        background-color: #ff9fa8;
-        border: none;
-        border-radius: 12px;
-        font-size: 16px;
-        color: #fff;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-    button:hover {
-        background-color: #ff6b81;
-    }
-    .hidden {
-        display: none;
-    }
-    .option-btn {
-        background-color: #ffd1d9;
-    }
-    .option-btn.selected {
-        background-color: #ff6b81;
-    }
-    .nav-btns {
-        display: flex;
-        justify-content: space-between;
-    }
-    .nav-btns button {
-        width: 48%;
-    }
-    .result {
-        background-color: #fff0f2;
-        padding: 20px;
-        border-radius: 12px;
-        text-align: left;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>焦虑状态深度评估测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 50px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-section {
+            text-align: center;
+        }
+
+        .welcome-section h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .welcome-section .subtitle {
+            font-size: 0.95rem;
+            color: #718096;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+	    text-align: left;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 40px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .question-section {
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .question-content h2 {
+            font-size: 1.8rem;
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .option {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            color: #2d3748;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .prev-btn {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .prev-btn:hover {
+            background: #cbd5e0;
+            transform: translateY(-2px);
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .result-section {
+            display: none;
+            text-align: center;
+        }
+
+        .result-section h2 {
+            font-size: 2.2rem;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .score-display {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 30px 0;
+        }
+
+        .result-description {
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 16px;
+            margin: 30px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .result-description h3 {
+            font-size: 1.5rem;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .result-description p {
+            font-size: 1.05rem;
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .suggestions {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .suggestions ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .suggestions li {
+            padding: 12px 0;
+            color: #4a5568;
+            font-size: 1.05rem;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .suggestions li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h3 {
+            font-size: 1.5rem;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-size: 1.05rem;
+            color: #4a5568;
+            margin-bottom: 25px;
+        }
+
+        .modal-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 36px;
+            font-size: 1.05rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .welcome-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .welcome-section p {
+                font-size: 1rem;
+            }
+
+            .question-content h2 {
+                font-size: 1.4rem;
+            }
+
+            .option {
+                padding: 15px 18px;
+                font-size: 0.95rem;
+            }
+
+            .score-display {
+                font-size: 3rem;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <!-- 首页 -->
-    <div id="home">
-        <h1>你对TA是哪种喜欢</h1>
-        <p>从20个轻松日常场景里，看看你对Ta的喜欢，更像哪一种心理模式。</p>
-        <ul>
-            <li><strong>喜欢触发点：</strong>了解在什么样的细节和氛围里，你最容易对Ta产生好感。</li>
-            <li><strong>理想相处模式：</strong>看看你更偏爱轻松松弛、暧昧拉扯，还是稳定踏实的相处节奏。</li>
-            <li><strong>关系安全感来源：</strong>评估你是更依赖对方回应、相处氛围，还是自己的节奏与边界。</li>
-            <li><strong>你对Ta的喜欢类型：</strong>最终会从8种喜欢方式中，为你匹配一种最贴近现状的类型说明。</li>
-        </ul>
-        <p><strong>隐私保护：</strong>本测评不会记录任何个人身份信息，结果仅自己可见。</p>
-        <p><strong>心理学说明：</strong>题目与结果参考依恋理论、投射机制和吸引动机，仅供自我觉察与娱乐使用。</p>
-        <button id="startBtn">点击开始测试</button>
-    </div>
+    <div class="container">
+        <!-- 欢迎页面 -->
+        <div class="welcome-section" id="welcomeSection">
+            <h1>焦虑状态深度评估测试</h1>
+            <p>欢迎参加这个专业的焦虑状态评估测试。</p>
+            <p style="text-align: left;">本测试基于心理学研究设计，包含30道精心编制的题目，将从多个维度全面评估您的焦虑状态，包括生理反应、认知模式、情绪体验和行为表现。</p>
+            <p>测试大约需要8-10分钟完成。请根据您最近两周的真实感受作答，没有对错之分。</p>
+            <div class="subtitle">
+                <strong>温馨提示：</strong>本测试仅供参考，不能替代专业医疗诊断。如果您感到严重困扰，建议寻求专业心理咨询师或医生的帮助。
+            </div>
+            <button class="start-btn" onclick="startTest()">开始测试</button>
+        </div>
 
-    <!-- 题目页面 -->
-    <div id="quiz" class="hidden">
-        <h2 id="questionTitle">问题</h2>
-        <div id="options"></div>
-        <div class="nav-btns">
-            <button id="prevBtn">上一题</button>
-            <button id="nextBtn">下一题</button>
+        <!-- 问题页面 -->
+        <div class="question-section" id="questionSection">
+            <div class="progress-text">
+                <span id="progressText">第 1 题 / 共 30 题</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="question-content">
+                <h2 id="questionTitle"></h2>
+                <div class="options" id="optionsContainer"></div>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn" id="prevBtn" onclick="prevQuestion()" style="display: none;">上一题</button>
+                <button class="nav-btn next-btn" id="nextBtn" onclick="nextQuestion()">下一题</button>
+            </div>
+        </div>
+
+        <!-- 结果页面 -->
+        <div class="result-section" id="resultSection">
+            <h2>测试完成</h2>
+            <div class="score-display" id="scoreDisplay"></div>
+            <div class="result-description" id="resultDescription"></div>
+            <button class="restart-btn" onclick="restartTest()">重新测试</button>
         </div>
     </div>
 
-    <!-- 结果页面 -->
-    <div id="resultPage" class="hidden">
-        <h2>测试结果</h2>
-        <div class="result" id="resultContent"></div>
-        <button id="restartBtn">重新测试</button>
+    <!-- 提示弹窗 -->
+    <div class="modal" id="alertModal">
+        <div class="modal-content">
+            <h3>请选择答案</h3>
+            <p>请先选择一个答案再继续</p>
+            <button class="modal-btn" onclick="closeModal()">确定</button>
+        </div>
     </div>
-</div>
 
-<script>
-const questions = [
-  {
-    q: "1️⃣ 当 TA 很久没回你消息，你第一反应是？",
-    options: ["A. 有点失落，但会忍住不去打扰","B. 会反复点开聊天框，看是不是自己哪里说错了","C. 心里不爽，觉得 TA 不够在意","D. 反而松一口气，觉得不用一直互动"]
-  },
-  {
-    q: "2️⃣ TA 跟别人关系看起来很亲近时，你更接近哪种感受？",
-    options: ["A. 会有点吃醋，但能自我消化","B. 心里慌，开始比较自己哪里不如对方","C. 明显不舒服，想确认自己在 TA 心里的位置","D. 理性告诉自己这很正常"]
-  },
-  // ... 这里省略 3-19 题，实际使用时补全所有20题
-  {
-    q: "20️⃣ 如果这段关系结束，你更可能？",
-    options: ["A. 慢慢走出来","B. 很久放不下","C. 心有不甘","D. 理性接受"]
-  }
-];
+    <script>
+        const questions = [
+            {
+                question: "在过去两周内，您是否经常感到内心不安或紧张？",
+                options: ["从不", "偶尔", "有时", "经常", "总是"]
+            },
+            {
+                question: "您是否难以控制自己的担忧情绪？",
+                options: ["完全可以控制", "大部分时候可以", "有时困难", "经常困难", "几乎无法控制"]
+            },
+            {
+                question: "您是否过度担心许多不同的事情？",
+                options: ["从不", "很少", "有时", "经常", "持续不断"]
+            },
+            {
+                question: "您是否发现自己很难放松下来？",
+                options: ["很容易放松", "比较容易", "有些困难", "很困难", "完全无法放松"]
+            },
+            {
+                question: "您是否因为焦虑而感到坐立不安？",
+                options: ["从不", "很少", "有时", "经常", "几乎总是"]
+            },
+            {
+                question: "您是否容易被激怒或变得烦躁？",
+                options: ["从不", "很少", "有时", "经常", "非常频繁"]
+            },
+            {
+                question: "您是否感到害怕，好像将要发生可怕的事情？",
+                options: ["从不", "偶尔", "有时", "经常", "持续存在"]
+            },
+            {
+                question: "您的睡眠质量如何？是否因焦虑而难以入睡或保持睡眠？",
+                options: ["睡眠很好", "偶尔失眠", "经常入睡困难", "严重失眠", "几乎整夜难眠"]
+            },
+            {
+                question: "您是否经常感到肌肉紧张或身体疼痛？",
+                options: ["从不", "很少", "有时", "经常", "持续存在"]
+            },
+            {
+                question: "您是否出现心跳加速或心悸的症状？",
+                options: ["从不", "很少", "有时", "经常", "频繁发作"]
+            },
+            {
+                question: "您是否感到呼吸急促或有窒息感？",
+                options: ["从不", "很少", "有时", "经常", "非常频繁"]
+            },
+            {
+                question: "您是否经常出汗，尤其是在不热的情况下？",
+                options: ["从不", "很少", "有时", "经常", "几乎总是"]
+            },
+            {
+                question: "您是否感到头晕、头重脚轻或快要晕倒？",
+                options: ["从不", "很少", "有时", "经常", "非常频繁"]
+            },
+            {
+                question: "您是否出现胃部不适、恶心或腹泻？",
+                options: ["从不", "很少", "有时", "经常", "持续存在"]
+            },
+            {
+                question: "您是否感到注意力难以集中？",
+                options: ["注意力很好", "偶尔分心", "经常分心", "很难集中", "完全无法集中"]
+            },
+            {
+                question: "您的记忆力是否受到影响？",
+                options: ["没有影响", "轻微影响", "明显影响", "严重影响", "记忆力严重下降"]
+            },
+            {
+                question: "您是否总是预期最坏的结果会发生？",
+                options: ["从不", "很少", "有时", "经常", "总是"]
+            },
+            {
+                question: "您是否对日常活动失去兴趣？",
+                options: ["兴趣正常", "兴趣略减", "兴趣明显减少", "兴趣严重减少", "完全失去兴趣"]
+            },
+            {
+                question: "您是否回避让您感到焦虑的情境或活动？",
+                options: ["从不回避", "很少回避", "有时回避", "经常回避", "总是回避"]
+            },
+            {
+                question: "您是否感到疲劳或精力不足？",
+                options: ["精力充沛", "偶尔疲劳", "经常疲劳", "持续疲劳", "精疲力竭"]
+            },
+            {
+                question: "您是否因为担忧而影响了工作或学习表现？",
+                options: ["没有影响", "轻微影响", "明显影响", "严重影响", "无法工作或学习"]
+            },
+            {
+                question: "您是否因为焦虑而影响了人际关系？",
+                options: ["没有影响", "轻微影响", "明显影响", "严重影响", "关系严重受损"]
+            },
+            {
+                question: "您是否对未来感到过度担忧？",
+                options: ["从不", "很少", "有时", "经常", "持续不断"]
+            },
+            {
+                question: "您是否感到难以做出决定？",
+                options: ["决策果断", "偶尔犹豫", "经常犹豫", "很难决定", "完全无法决定"]
+            },
+            {
+                question: "您是否感到自己无法应对日常压力？",
+                options: ["应对良好", "大多能应对", "有时困难", "经常困难", "完全无法应对"]
+            },
+            {
+                question: "您是否出现手抖或颤抖的症状？",
+                options: ["从不", "很少", "有时", "经常", "持续存在"]
+            },
+            {
+                question: "您是否感到喉咙发紧或吞咽困难？",
+                options: ["从不", "很少", "有时", "经常", "频繁发作"]
+            },
+            {
+                question: "您是否对声音、光线或其他刺激过度敏感？",
+                options: ["不敏感", "略微敏感", "比较敏感", "非常敏感", "极度敏感"]
+            },
+            {
+                question: "您是否经常检查事情是否做对或做完？",
+                options: ["从不", "很少", "有时", "经常", "强迫性检查"]
+            },
+            {
+                question: "总体而言，焦虑对您生活质量的影响程度如何？",
+                options: ["没有影响", "轻微影响", "中等影响", "严重影响", "极度严重影响"]
+            }
+        ];
 
-const results = {
-    A: {
-        title: "稳定型喜欢",
-        way: "成熟、温和、有耐心；爱得安静但真；不黏不作妖。",
-        mechanism: "内心安全感相对稳定。",
-        advice: "表达需求，别低估自己的价值。"
-    },
-    B: {
-        title: "依附型喜欢",
-        way: "情绪牵引型，容易上头，重视回应。",
-        mechanism: "安全感依赖对方关注，容易焦虑。",
-        advice: "把注意力从“TA怎么想”回到“自己想要什么”。"
-    },
-    C: {
-        title: "控制型喜欢",
-        way: "占有感强，重视位置感，易吃醋。",
-        mechanism: "害怕自己在关系里“可有可无”。",
-        advice: "少用试探，直接说需求，安全感不靠控制换。"
-    },
-    D: {
-        title: "回避型喜欢",
-        way: "理性克制，带距离感，不轻易暴露情绪。",
-        mechanism: "习惯靠自己，亲密关系有点不安。",
-        advice: "允许别人走近你，不必独自扛情绪。"
-    }
-};
+        let currentQuestion = 0;
+        let answers = new Array(30).fill(null);
 
-let current = 0;
-let answers = Array(questions.length).fill(null);
-
-const home = document.getElementById("home");
-const quiz = document.getElementById("quiz");
-const resultPage = document.getElementById("resultPage");
-const questionTitle = document.getElementById("questionTitle");
-const optionsDiv = document.getElementById("options");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-const resultContent = document.getElementById("resultContent");
-const startBtn = document.getElementById("startBtn");
-const restartBtn = document.getElementById("restartBtn");
-
-function showQuestion(index){
-    const q = questions[index];
-    questionTitle.textContent = q.q;
-    optionsDiv.innerHTML = "";
-    q.options.forEach((opt, i)=>{
-        const btn = document.createElement("button");
-        btn.textContent = opt;
-        btn.className = "option-btn";
-        if(answers[index] === i) btn.classList.add("selected");
-        btn.onclick = ()=>{
-            answers[index] = i;
-            document.querySelectorAll(".option-btn").forEach(b=>b.classList.remove("selected"));
-            btn.classList.add("selected");
-        };
-        optionsDiv.appendChild(btn);
-    });
-
-    prevBtn.style.display = index === 0 ? "none" : "inline-block";
-    nextBtn.textContent = index === questions.length - 1 ? "查看答案" : "下一题";
-}
-
-function showResult(){
-    // 检查是否有未作答
-    const incomplete = answers.findIndex(a => a === null);
-    if(incomplete !== -1){
-        alert(`第 ${incomplete+1} 题还未作答，请完成后查看答案。`);
-        current = incomplete;
-        showQuestion(current);
-        quiz.classList.remove("hidden");
-        return;
-    }
-
-    // 统计选择最多的类型
-    const counts = {A:0,B:0,C:0,D:0};
-    answers.forEach(a=>{
-        const key = ["A","B","C","D"][a];
-        counts[key]++;
-    });
-    const maxType = Object.keys(counts).reduce((a,b)=>counts[a]>=counts[b]?a:b);
-    const r = results[maxType];
-    resultContent.innerHTML = `<h3>${r.title}</h3>
-    <p><strong>喜欢方式：</strong>${r.way}</p>
-    <p><strong>心理机制：</strong>${r.mechanism}</p>
-    <p><strong>关系建议：</strong>${r.advice}</p>`;
-    quiz.classList.add("hidden");
-    resultPage.classList.remove("hidden");
-}
-
-startBtn.onclick = ()=>{
-    home.classList.add("hidden");
-    quiz.classList.remove("hidden");
-    showQuestion(current);
-};
-
-prevBtn.onclick = ()=>{
-    if(current>0){
-        current--;
-        showQuestion(current);
-    }
-};
-
-nextBtn.onclick = ()=>{
-    if(current < questions.length - 1){
-        if(answers[current] === null){
-            alert("请先选择一个答案！");
-            return;
+        function startTest() {
+            document.getElementById('welcomeSection').style.display = 'none';
+            document.getElementById('questionSection').style.display = 'block';
+            loadQuestion();
         }
-        current++;
-        showQuestion(current);
-    } else {
-        showResult();
-    }
-};
 
-restartBtn.onclick = ()=>{
-    current = 0;
-    answers = Array(questions.length).fill(null);
-    resultPage.classList.add("hidden");
-    home.classList.remove("hidden");
-};
-</script>
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('questionTitle').textContent = `${currentQuestion + 1}. ${question.question}`;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                if (answers[currentQuestion] === index) {
+                    optionDiv.classList.add('selected');
+                }
+                optionDiv.textContent = option;
+                optionDiv.onclick = () => selectOption(index);
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            // 更新进度
+            const progress = ((currentQuestion + 1) / 30) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `第 ${currentQuestion + 1} 题 / 共 30 题`;
+
+            // 更新按钮显示
+            document.getElementById('prevBtn').style.display = currentQuestion > 0 ? 'block' : 'none';
+            document.getElementById('nextBtn').textContent = currentQuestion === 29 ? '查看结果' : '下一题';
+        }
+
+        function selectOption(index) {
+            answers[currentQuestion] = index;
+            const options = document.querySelectorAll('.option');
+            options.forEach((opt, i) => {
+                if (i === index) {
+                    opt.classList.add('selected');
+                } else {
+                    opt.classList.remove('selected');
+                }
+            });
+        }
+
+        function nextQuestion() {
+            if (answers[currentQuestion] === null) {
+                showModal();
+                return;
+            }
+
+            if (currentQuestion < 29) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function showModal() {
+            document.getElementById('alertModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('alertModal').style.display = 'none';
+        }
+
+        function calculateScore() {
+            let totalScore = 0;
+            answers.forEach(answer => {
+                totalScore += answer;
+            });
+            return totalScore;
+        }
+
+        function showResults() {
+            const score = calculateScore();
+            const maxScore = 120; // 30题 * 4分
+            const percentage = Math.round((score / maxScore) * 100);
+
+            document.getElementById('questionSection').style.display = 'none';
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('scoreDisplay').textContent = `${percentage}%`;
+
+            let resultHTML = '';
+            
+            if (percentage < 25) {
+                resultHTML = `
+                    <h3>焦虑水平：轻度或无明显焦虑</h3>
+                    <p>您的焦虑水平处于正常或较低范围。您能够较好地应对日常压力，情绪状态相对稳定。偶尔的紧张和担忧是正常的，这表明您对生活有适度的关注。</p>
+                    <div class="suggestions">
+                        <h4>建议：</h4>
+                        <ul>
+                            <li>保持良好的生活习惯，继续维持规律的作息和健康的饮食</li>
+                            <li>培养兴趣爱好，保持积极的生活态度</li>
+                            <li>适度运动，如散步、瑜伽或游泳，有助于释放压力</li>
+                            <li>学习压力管理技巧，如深呼吸、冥想等，以备不时之需</li>
+                            <li>保持良好的社交关系，与家人朋友分享生活</li>
+                        </ul>
+                    </div>
+                `;
+            } else if (percentage < 50) {
+                resultHTML = `
+                    <h3>焦虑水平：轻度至中度焦虑</h3>
+                    <p>您正经历轻度到中度的焦虑状态。虽然焦虑还没有严重影响您的日常生活，但已经开始对您的情绪和身体产生一定影响。这个阶段是采取积极措施的好时机，可以有效预防焦虑的进一步发展。</p>
+                    <div class="suggestions">
+                        <h4>建议：</h4>
+                        <ul>
+                            <li>识别并记录引发焦虑的具体情境和想法，建立焦虑日记</li>
+                            <li>学习认知行为技巧，挑战不合理的担忧和负面思维</li>
+                            <li>建立规律的运动习惯，每周至少3-4次中等强度运动</li>
+                            <li>练习放松技巧，如渐进性肌肉放松、正念冥想</li>
+                            <li>限制咖啡因和酒精摄入，保证充足睡眠</li>
+                            <li>考虑参加压力管理或正念减压课程</li>
+                            <li>必要时寻求心理咨询师的专业指导</li>
+                        </ul>
+                    </div>
+                `;
+            } else if (percentage < 75) {
+                resultHTML = `
+                    <h3>焦虑水平：中度至重度焦虑</h3>
+                    <p>您正经历较为明显的焦虑状态，焦虑已经显著影响了您的日常生活、工作表现和人际关系。在这个阶段，强烈建议您寻求专业帮助。焦虑是可以通过专业治疗得到有效缓解的。</p>
+                    <div class="suggestions">
+                        <h4>建议：</h4>
+                        <ul>
+                            <li><strong>建议尽快咨询专业心理治疗师或精神科医生</strong></li>
+                            <li>认知行为疗法(CBT)已被证实对焦虑障碍非常有效</li>
+                            <li>考虑接受系统的心理治疗，不要自行面对</li>
+                            <li>在专业人士指导下，可能需要考虑药物辅助治疗</li>
+                            <li>向家人和朋友寻求支持，不要独自承受</li>
+                            <li>暂时减少工作压力，必要时请假休息</li>
+                            <li>避免使用酒精或药物来缓解焦虑</li>
+                            <li>加入焦虑症支持小组，与有相似经历的人交流</li>
+                        </ul>
+                    </div>
+                `;
+            } else {
+                resultHTML = `
+                    <h3>焦虑水平：重度焦虑</h3>
+                    <p>您的测试结果显示您正经历严重的焦虑状态，这已经对您的生活产生了重大影响。请不要过度担心，焦虑障碍是可以治疗的，许多人通过专业治疗得到了显著改善。现在最重要的是立即寻求专业帮助。</p>
+                    <div class="suggestions">
+                        <h4>紧急建议：</h4>
+                        <ul>
+                            <li><strong>请立即预约精神科医生或心理治疗师</strong></li>
+                            <li>如果有自伤或伤害他人的想法，请立即拨打心理危机热线或前往医院急诊</li>
+                            <li>告知家人或亲密朋友您的状况，请他们提供支持</li>
+                            <li>在专业医生指导下可能需要药物治疗配合心理治疗</li>
+                            <li>暂时停止或减少工作，专注于康复</li>
+                            <li>避免做重大决定，等情绪稳定后再考虑</li>
+                            <li>接受专业的认知行为疗法或其他循证治疗</li>
+                            <li>记住：寻求帮助是勇敢的表现，不是软弱</li>
+                            <li>康复需要时间，要对自己有耐心和同情心</li>
+                        </ul>
+                        <p style="margin-top: 20px; color: #e53e3e; font-weight: 600;">
+                            全国心理援助热线：12320 | 24小时危机干预热线：010-82951332
+                        </p>
+                    </div>
+                `;
+            }
+
+            document.getElementById('resultDescription').innerHTML = resultHTML;
+        }
+
+        function restartTest() {
+            currentQuestion = 0;
+            answers = new Array(30).fill(null);
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('welcomeSection').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
